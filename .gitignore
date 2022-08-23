@@ -25,4 +25,4 @@ pnpm-debug.log*
 yarn.lock
 
 # database
-database
+database/*
