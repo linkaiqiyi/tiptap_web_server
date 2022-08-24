@@ -35,7 +35,7 @@ app.post("/save-data", async function (req, res) {
     res.send(content);
   } else if (event === Events["onChange"]) {
     console.log("\n-------------onChange: " + documentName + "------------\n");
-    saveData(documentName, document[documentName]);
+    saveData(documentName, document['default']);
     res.end();
   } else if(event === Events["onConnect"]) {
     res.send({})

@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const path = (fileName) => `./database/${fileName}.json`;
+const initPath = (fileName) => `./database/${fileName}.json`;
 
 const DEFAULT_CONTENT = {
   type: "doc",
@@ -13,11 +13,11 @@ const DEFAULT_CONTENT = {
 };
 
 function saveData(fileName = "default", data) {
-  let content = data;
+  let content = data || DEFAULT_CONTENT;
   if (typeof data !== "string") {
     content = JSON.stringify(content, null, 4);
 
-    fs.writeFile(path(fileName), content, (err) => {
+    fs.writeFile(initPath(fileName), content, (err) => {
       if (err) {
         throw err;
       }
@@ -26,16 +26,21 @@ function saveData(fileName = "default", data) {
 }
 
 function getData(fileName = "default") {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path(fileName), "utf-8", (err, data) => {
-      if (err || !data) {
-        resolve({ [fileName]: DEFAULT_CONTENT });
-        console.log("No file or file is empty!");
-      } else {
-        let content = JSON.parse(data.toString());
-        resolve({ [fileName]: content });
-      }
-    });
+  let path = initPath(fileName);
+  return new Promise((resolve) => {
+    if (fs.existsSync(path)) {
+      fs.readFile(path, "utf-8", (err, data) => {
+        if (err || !data) {
+          resolve({ [fileName]: DEFAULT_CONTENT });
+          console.log("No file or file is empty!");
+        } else {
+          let content = JSON.parse(data.toString());
+          resolve({ [fileName]: content });
+        }
+      });
+    } else {
+      resolve({ [fileName]: DEFAULT_CONTENT });
+    }
   });
 }
 

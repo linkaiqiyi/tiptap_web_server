@@ -4,7 +4,7 @@
   "description": "tiptap 的 服务器端，用来处理存储数据",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
