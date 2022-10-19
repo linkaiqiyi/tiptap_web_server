@@ -38,7 +38,8 @@ app.post("/save-data", async function (req, res) {
     saveData(documentName, document['default']);
     res.end();
   } else if(event === Events["onConnect"]) {
-    res.send({})
+    let content = await getData(documentName);
+    res.send(content);
   } else if(event === Events["onDisConnent"]) {
     res.send({})
   }
